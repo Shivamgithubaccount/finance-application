@@ -2,11 +2,6 @@ import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_DASHBOARD_DATA } from '../graphql/queries';
 import { useNavigate, Link } from 'react-router-dom';
-import { Container, Typography, Box, Grid, Button, MenuItem, Select, FormControl, InputLabel, CircularProgress, IconButton, Paper, Divider, TextField, Dialog, DialogTitle, DialogContent, DialogActions, TablePagination } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
-import LogoutIcon from '@mui/icons-material/Logout';
 import { DELETE_TRANSACTION } from '../graphql/mutations';
 import './styles/Dashboard.css';
 
@@ -36,8 +31,8 @@ const Dashboard = () => {
     refetchQueries: [{ query: GET_DASHBOARD_DATA }],
   });
 
-  if (loading) return <CircularProgress />;
-  if (error) return <Typography color="error">Error: {error.message}</Typography>;
+  if (loading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error">Error: {error.message}</div>;
 
   const { totalBalance, totalIncome, totalExpenses, categories, transactions } = data;
 
@@ -47,7 +42,7 @@ const Dashboard = () => {
   };
 
   const handleEdit = (id) => {
-    navigate(`/transactions/edit/${id}`);
+    navigate('/transactions/edit/${id}');
   };
 
   const handleDelete = async (id) => {
@@ -73,16 +68,6 @@ const Dashboard = () => {
     });
   };
 
-  const handleOpenModal = (transaction) => {
-    setSelectedTransaction(transaction);
-    setOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpen(false);
-    setSelectedTransaction(null);
-  };
-
   const filteredTransactions = transactions
     .filter(tx => 
       (selectedCategory === 'All' || tx.category === selectedCategory) &&
@@ -98,166 +83,132 @@ const Dashboard = () => {
 
   const sortedTransactions = handleSort(filteredTransactions);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   const paginatedTransactions = sortedTransactions.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   return (
-    <Container maxWidth="lg" className="dashboard-container">
-      <Box className="top-bar">
-        <Typography variant="h4" component="h1">Dashboard</Typography>
-        <Box className="top-bar-buttons">
-          <Button
-            component={Link}
-            to="/transactions/add"
-            variant="contained"
-            color="primary"
-            startIcon={<AddIcon />}
-            className="add-transaction-button"
-          >
+    <div className="dashboard-container">
+      <header className="top-bar">
+        <h1>Dashboard</h1>
+        <div className="top-bar-buttons">
+          <Link to="/transactions/add" className="button add-transaction-button">
             Add New Transaction
-          </Button>
-          <Button
-            onClick={handleLogout}
-            variant="contained"
-            color="secondary"
-            startIcon={<LogoutIcon />}
-            className="logout-button"
-          >
+          </Link>
+          <button onClick={handleLogout} className="button logout-button">
             Logout
-          </Button>
-        </Box>
-      </Box>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
-          <Paper className="balance-summary">
-            <Typography variant="h6">Total Balance</Typography>
-            <Typography variant="h4">${totalBalance}</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={6} md={4}>
-          <Paper className="balance-summary">
-            <Typography variant="h6">Income</Typography>
-            <Typography variant="h4">${totalIncome}</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={6} md={4}>
-          <Paper className="balance-summary">
-            <Typography variant="h6">Expenses</Typography>
-            <Typography variant="h4">${totalExpenses}</Typography>
-          </Paper>
-        </Grid>
-      </Grid>
-      <Paper className="categories-section">
-        <Typography variant="h5">Categories</Typography>
-        <Divider />
-        <Box className="category-list">
+          </button>
+        </div>
+      </header>
+      <div className="balance-summary">
+        <div className="balance-item">
+          <h2>Total Balance</h2>
+          <p>${totalBalance}</p>
+        </div>
+        <div className="balance-item">
+          <h2>Income</h2>
+          <p>${totalIncome}</p>
+        </div>
+        <div className="balance-item">
+          <h2>Expenses</h2>
+          <p>${totalExpenses}</p>
+        </div>
+      </div>
+      <div className="categories-section">
+        <h2>Categories</h2>
+        <div className="category-list">
           {categories.map((category) => (
-            <Typography key={category} variant="body1" className="category-item">{category}</Typography>
+            <p key={category} className="category-item">{category}</p>
           ))}
-        </Box>
-      </Paper>
-      <Paper className="transaction-filter-section">
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={3}>
-            <FormControl fullWidth>
-              <InputLabel htmlFor="category-filter">Filter by Category</InputLabel>
-              <Select
-                label="Filter by Category"
-                id="category-filter"
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-              >
-                <MenuItem value="All">All</MenuItem>
-                {categories.map((category) => (
-                  <MenuItem key={category} value={category}>{category}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <TextField
-              label="Search"
-              variant="outlined"
-              fullWidth
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <TextField
-              label="Start Date"
-              type="date"
-              variant="outlined"
-              fullWidth
-              InputLabelProps={{ shrink: true }}
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <TextField
-              label="End Date"
-              type="date"
-              variant="outlined"
-              fullWidth
-              InputLabelProps={{ shrink: true }}
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <FormControl fullWidth>
-              <InputLabel htmlFor="sort-order">Sort By</InputLabel>
-              <Select
-                label="Sort By"
-                id="sort-order"
-                value={sortOrder}
-                onChange={(e) => setSortOrder(e.target.value)}
-              >
-                <MenuItem value="dateDesc">Date (Newest First)</MenuItem>
-                <MenuItem value="dateAsc">Date (Oldest First)</MenuItem>
-                <MenuItem value="amountDesc">Amount (High to Low)</MenuItem>
-                <MenuItem value="amountAsc">Amount (Low to High)</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
-      </Paper>
-      <Paper className="transaction-list-section">
-        <Typography variant="h5">Transaction List</Typography>
-        <Divider />
-        <Box className="transaction-list">
-          {filteredTransactions.map((tx, index) => (
-            <Box key={tx.id} className="transaction-item">
-              <Typography variant="body1">
+        </div>
+      </div>
+      <div className="transaction-filter-section">
+        <div className="filter-group">
+          <label htmlFor="category-filter">Filter by Category</label>
+          <select
+            id="category-filter"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            <option value="All">All</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>{category}</option>
+            ))}
+          </select>
+        </div>
+        <div className="filter-group">
+          <label htmlFor="search-query">Search</label>
+          <input
+            id="search-query"
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+        <div className="filter-group">
+          <label htmlFor="start-date">Start Date</label>
+          <input
+            id="start-date"
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+        </div>
+        <div className="filter-group">
+          <label htmlFor="end-date">End Date</label>
+          <input
+            id="end-date"
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+        </div>
+        <div className="filter-group">
+          <label htmlFor="sort-order">Sort By</label>
+          <select
+            id="sort-order"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+          >
+            <option value="dateDesc">Date (Newest First)</option>
+            <option value="dateAsc">Date (Oldest First)</option>
+            <option value="amountDesc">Amount (High to Low)</option>
+            <option value="amountAsc">Amount (Low to High)</option>
+          </select>
+        </div>
+      </div>
+      <div className="transaction-list-section">
+        <h2>Transaction List</h2>
+        <div className="transaction-list">
+          {paginatedTransactions.map((tx, index) => (
+            <div key={tx.id} className="transaction-item">
+              <p>
                 <strong>{index + 1}. Category:</strong> {tx.category} <br/>
                 <strong>Amount:</strong> ${tx.amount} <br/>
                 <strong>Type:</strong> {tx.type} <br/>
                 <strong>Date:</strong> {formatDate(tx.date)}
-              </Typography>
-              <Box className="transaction-actions">
-                <IconButton color="primary" onClick={() => handleEdit(tx.id)}>
-                  <EditIcon />
-                </IconButton>
-                <IconButton color="secondary" onClick={() => handleDelete(tx.id)}>
-                  <DeleteIcon />
-                </IconButton>
-              </Box>
-            </Box>
+              </p>
+              <div className="transaction-actions">
+                <button onClick={() => handleEdit(tx.id)} className="button edit-button">
+                  Edit
+                </button>
+                <button onClick={() => handleDelete(tx.id)} className="button delete-button">
+                  Delete
+                </button>
+              </div>
+            </div>
           ))}
-        </Box>
-      </Paper>
-      </Container>
+        </div>
+        <div className="pagination">
+          <button onClick={() => setPage(Math.max(0, page - 1))} disabled={page === 0}>
+            Previous
+          </button>
+          <span>Page {page + 1}</span>
+          <button onClick={() => setPage(page + 1)} disabled={paginatedTransactions.length < rowsPerPage}>
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default Dashboard;
-     
+export default Dashboard;
