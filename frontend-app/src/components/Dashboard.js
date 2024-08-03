@@ -42,7 +42,7 @@ const Dashboard = () => {
   };
 
   const handleEdit = (id) => {
-    navigate('/transactions/edit/${id}');
+    navigate(`/transactions/edit/${id}`);
   };
 
   const handleDelete = async (id) => {

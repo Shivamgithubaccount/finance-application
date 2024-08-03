@@ -1,55 +1,54 @@
 .transaction-form-container {
-    max-width: 700px; /* Increased width for larger forms */
-    margin: 50px auto;
-    padding: 40px;
-    background-color: #fff;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    border-radius: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .transaction-form-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333333; 
-  }
-  
-  .transaction-form-container form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px; 
-  }
-  
-  .transaction-form-container .MuiFormControl-root {
-    margin-bottom: 16px; 
-  }
-  
-  .transaction-form-container .MuiInputLabel-root {
-    color: #666666; 
-  }
-  
-  .transaction-form-container .MuiOutlinedInput-root {
-    border-radius: 8px;
-  }
-  
-  .transaction-form-container .MuiButton-containedPrimary {
-    background-color: #4caf50;
-    color: white;
-    border-radius: 8px;
-    padding: 12px 20px;
-    font-size: 16px;
-    text-transform: capitalize; 
-  }
-  
-  .transaction-form-container .MuiButton-containedPrimary:hover {
-    background-color: #45a049; 
-  }
-  
-  .transaction-form-container .MuiButton-containedPrimary:active {
-    background-color: #388e3c;
-  }
-  
-  .transaction-form-container .MuiButton-root {
-    margin-top: 20px; 
-  }
-  
+  max-width: 700px; /* Increased width for larger forms */
+  margin: 50px auto;
+  padding: 40px;
+  background-color: #fff;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.transaction-form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333333; 
+}
+
+.transaction-form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; 
+}
+
+.transaction-form-container .MuiFormControl-root {
+  margin-bottom: 16px; 
+}
+
+.transaction-form-container .MuiInputLabel-root {
+  color: #666666; 
+}
+
+.transaction-form-container .MuiOutlinedInput-root {
+  border-radius: 8px;
+}
+
+.transaction-form-container .MuiButton-containedPrimary {
+  background-color: #6f4caf;
+  color: white;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 16px;
+  text-transform: capitalize; 
+}
+
+.transaction-form-container .MuiButton-containedPrimary:hover {
+  background-color: #45a049; 
+}
+
+.transaction-form-container .MuiButton-containedPrimary:active {
+  background-color: #388e3c;
+}
+
+.transaction-form-container .MuiButton-root {
+  margin-top: 20px; 
+}
