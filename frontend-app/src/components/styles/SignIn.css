@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .signin-container {
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .MuiContainer-root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .MuiBox-root {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .MuiTypography-h5 {
+    font-weight: 600;
+  }
+  
+  .MuiButton-containedPrimary {
+    background-color: #3f51b5; /* Primary color */
+  }
+  
+  .MuiButton-containedPrimary:hover {
+    background-color: #303f9f; /* Darker shade on hover */
+  }
+  
+
+  
