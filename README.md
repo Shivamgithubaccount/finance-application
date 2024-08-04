@@ -1,7 +1,14 @@
-# Personal Finance Management Application
+# Finance Management Application
+The Finance Management application is created to manage personal finances by having a dashboard ,adding, editing, and deleting transactions features.
+This application is built using React, GraphQL, Node.js, and MongoDB.
 
-A web application to manage personal finances, providing features for user registration/login, a dashboard for financial and functionality to add, edit, and delete transactions. This application is built using React, GraphQL, Node.js, and MongoDB.
+## Tech Stack
 
+- **Frontend**: React, styled component, Apollo Client
+- **Backend**: Node.js, Apollo Server, GraphQL
+- **Database**: MongoDB
+
+- 
 ## Features
 
 - **User Authentication**: Register and log in to access personal finance data.
@@ -11,11 +18,7 @@ A web application to manage personal finances, providing features for user regis
 - **Filtering and Search**: Filter transactions by category and search through them.
 - **Responsive Design**: Optimized for various screen sizes.
 
-## Tech Stack
 
-- **Frontend**: React, Material UI, Apollo Client
-- **Backend**: Node.js, Apollo Server, GraphQL
-- **Database**: MongoDB
 
 ## Setup Instructions
 
@@ -29,18 +32,6 @@ A web application to manage personal finances, providing features for user regis
 
 git clone (https://github.com/kajamal/Finance-manganment-app.git 
 cd Finance-manganment-app
-
-### Install Dependencies
-
-Frontend:
-cd frontend
-
-npm install
-
-Backend:
-cd backend
-
-npm install
 
 ### Setup Environment Variables:
 
